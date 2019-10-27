@@ -1,0 +1,82 @@
+---
+title: "Project: Climate in Guatemala"
+author: "Andrea Sofía García de León"
+date: "October, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+This is an example of an R Markdown document. It presents information about climate in Guatemala. The data was obtained from WorldClim.
+
+
+## Guatemala
+
+Guatemala is a country in Central America. Its official area is 108,889 km². The borders of Guatemala are shown on the map. 
+```{r echo=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
+
+library(raster)
+guatemala<-getData("GADM", country="GTM", level=2) #get country borders, other country codes can ve found in the manual
+plot(guatemala)
+
+```
+
+Source: GADM
+
+Guatemala is mountainous except for the south coast and the vast northern lowlands of Peten. All major cities are located in the highlands and Pacific coast regions. These regions vary in climate, elevation, and landscape, providing dramatic contrasts between humid tropical weather in the Pacific Coast and Peten, and colder, drier weather in the highland peaks.
+
+###Precipitation
+
+Guatemala's location between the Atlantic and Pacific Ocean makes it proned to humid tropical climate. The dinamic of rainfall is shown in the sequence.
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+prec<-getData("worldclim", var="prec",res=2.5) #get precipitation 
+prec_ger1<- crop(prec,guatemala) #crop precipitacion to extent of guate
+prec_ger2<- mask(prec_ger1, guatemala) #mask precipitacion to extent of guate
+spplot(prec_ger2) #plot result
+
+```
+
+Source: WorldClim
+
+As it is shown in the graph, the rainy season starts in May and ends in October. There is a canicula in July and Agoust.
+```{r, echo=FALSE}
+prec_avg<-cellStats(prec_ger2,stat="mean") #extract precipitation average of guate, other statistics possible as well
+plot(prec_avg, 
+     main="Average monthly precipitation in Guatemala", 
+     type= 'b',
+     xlab="Month",
+     ylab="Precipitation (mm)",
+     lty=4, 
+     pch=16, 
+     col=4)
+```
+
+###Temperature
+
+The dinamic of mean monthly temperature is shown in the following sequence.
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+temp<-getData("worldclim", var="tmean",res=2.5) #get temperature
+temp_ger1<- crop(temp,guatemala) #crop temp to extent of guate
+temp_ger2<- mask(temp_ger1, guatemala) #mask temp to extent of guate
+spplot(temp_ger2)
+```
+
+Source: WorldClim
+
+The average mean monthly temperature is shown in the graphic. The temperature is shown in °C *10. The warm season is from March to July. The hottest month is May.
+
+```{r,echo=FALSE }
+temp_avg<-cellStats(temp_ger2,stat="mean") #extract temp average of guate, other statistics possible as well
+plot(temp_avg, 
+     main="Average monthly mean temperature in Guatemala", 
+     type= 'b',
+     xlab="Month",
+     ylab="Mean Temperature (°C * 10)",
+     lty=6, 
+     pch=16, 
+     col="orangered1")
+```
