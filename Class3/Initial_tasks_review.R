@@ -54,4 +54,3 @@ cloud(a ~ z*f)
 #list
 
 a<- list(obj_1=runif(10), obj_2=df$measure1, obj_3=table )
-a
