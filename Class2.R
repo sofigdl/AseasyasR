@@ -26,6 +26,7 @@ class(df) #type
 levels(df)
 
 install.packages("datapasta") #copy&paste information
+#Pestañita de addins y buscar paste
 prueba<-data.frame(stringsAsFactors=FALSE,
                    No. = c("33-01", "33-02", "33-03", "33-04", "33-05",
                            "33-06", "33-07", "33-08", "33-09"),
