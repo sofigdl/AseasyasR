@@ -27,4 +27,5 @@ plot(r12)
 df12<-r12[]
 head(df12)
 
+#Convertir los archivos no es tan fácil como parece, atrás hay un gran código 
 str(raster_name) #????
