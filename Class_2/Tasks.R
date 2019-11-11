@@ -1,11 +1,13 @@
-#TASKS
+#TASKS (DATA QUERY)
+#Vectors
 df_1<-data.frame(plot="location_name_1",measure1=runif(100)*1000, measure2=round(runif(100)*100),value=rnorm(100,2,1),ID=rep(LETTERS,100)[1:100])
 df_2<-data.frame(plot="location_name_2", measure1=runif(50)*100, measure2=round(runif(50)*10),value=rnorm(50), ID=rep(LETTERS,50)[1:50])
 df<-rbind(df_1,df_2) #combine two data frame row-wise, cbind for columns
 df
 
+#Plotting
 df[,c('measure1','measure2')]
-df[66:70,c('value')]
+df[66:70,c('measure1')]
 plot(df)
 boxplot(df)
 hist(a)
@@ -44,7 +46,19 @@ scatterplot3d(lon, lat, plotvar,
               col.grid="gray", 
               cex.symbols=2,)
 
+#Indexing with and y or
+df[df$value>3.2 | df$measure1>50 ,] #| means "or"
+df[df$value>3.2 & df$measure1>50 ,] #& means "and"
 
+#Add new column based on the product of two others
+
+df$new_col<-df$measure1*de$measure2
+
+# query using keyword
+df[grep("a", df$ID, ignore.case = T),]
+df[grep("a", df$ID, ignore.case = F),] #ignore.case sirve para tomar en cuenta mayúsculas y minúsculas
+
+##########################################################
 #Index Data Frame
 install.packages("RCurl")
 library(RCurl) #download from GitHub
@@ -83,6 +97,3 @@ df[df$LUCAS_LC<2|df$LUCAS_LC>3,]
 
 #Select LUcAS_LC and SRTM where NDVI greater equal than 0.4
 df[df$TimeScan.NDVIavg>=0.4 ,c("LUCAS_LC","SRTM")]
-
-
-#subset(df, (Gender == 'Male' & Color == 'Blue'))

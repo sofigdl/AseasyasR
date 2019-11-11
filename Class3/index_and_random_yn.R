@@ -4,15 +4,17 @@ df_2<-data.frame(plot="location_name_2", measure1=runif(50)*100, measure2=round(
 df<-rbind(df_1,df_2) #combine two data frame row-wise, cbind for columns
 df
 
-df[df$value>3.0,]
-df[df$value>3.2| df$measure1>50 ,]
+#Indexing with and y or
+df[df$value>3.2 | df$measure1>50 ,] #| means "or"
+df[df$value>3.2 & df$measure1>50 ,] #& means "and"
 
-df$new_col<-df$measure1*df$measure2
-df[1:4,]
+#Add new column based on the product of two others
+
+df$new_col<-df$measure1*de$measure2
 
 # query using keyword
 df[grep("a", df$ID, ignore.case = T),]
-df[grep("a", df$ID, ignore.case = F),] #0 rows
+df[grep("a", df$ID, ignore.case = F),] #ignore.case sirve para tomar en cuenta mayúsculas y minúsculas
 
 #Random list of yes or no
 

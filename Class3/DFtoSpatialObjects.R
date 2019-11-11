@@ -1,5 +1,5 @@
-#Transform DF to Spatial Objects
-
+#Converting DF to Spatial Objects
+#spdf means Spatial Point Data Frame
 spdf.obj<-df #create a copy
 names(spdf.obj) #check the names
 library(sp) 
@@ -14,6 +14,16 @@ class(spdf.obj)
 
 setwd("C:/Users/chofi/Documents/2019/Maestria/Programming_Geostatistic/GIT/AseasyasR/Class3")
 getwd()
+
+#We can assigne a corresponding data frame to the spatial point object
 spdf.obj
 spdf.obj@data<-df
+
+#Exporting as shp, geopackage, etc
 writeOGR(spdf.obj, "sample_point_with_data.shp", driver="ESRI Shapefile", "data")
+
+#Exporting certains parts as shp, geopackage, etc
+writeOGR(spdf.obj[,1:14], "sample_point_with_data_1.shp", driver="ESRI Shapefile", "data")
+
+test1.df <- as.data.frame(spdf.obj)
+test1.df

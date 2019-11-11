@@ -6,10 +6,14 @@ df<-read.csv("https://raw.githubusercontent.com/wegmann/R_data/master/Steigerwal
 df
 head(df)
 names(df)
+str(df)
+dim(df)
+
 
 #Select just one column
 df["SRTM"]
 df[,5]
+
 #Select just sentinel 2 data
 s2data<-c(4:13)
 df[,s2data]
