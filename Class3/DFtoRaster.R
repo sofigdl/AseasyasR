@@ -27,5 +27,15 @@ plot(r12)
 df12<-r12[]
 head(df12)
 
-#Convertir los archivos no es tan fácil como parece, atrás hay un gran código 
-str(raster_name) #????
+#The estructure is more complex...
+str(raster_name)
+
+#Create a raster from scratch
+library(raster)
+r3<-raster(nrows=10, ncols=10)
+r3
+plot(r3)
+
+r3[]<-rnorm(100) #fill raster with 100 random values
+r3
+plor(r3)
