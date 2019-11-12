@@ -36,11 +36,18 @@ plot(test1[,c("SRTM","TimeScan.NDVIavg")])
 test1
 
 #Plot NDVI values for SRTM values less than 300 and landcover equal to 1
-test2.1<-df[(df$MOD.evi>df$L7.msavi|df$TimeScan.NDVIslope>=df$L8.evi),]
+#test2.1<-df[(df$MOD.evi>df$L7.msavi|df$TimeScan.NDVIslope>=df$L8.evi),]
 test2<-df[(df$SRTM<300&df$LUCAS_LC==1),]
 test2
 plot(test2[,"TimeScan.NDVIavg"])
 plot(df[(df$SRTM<300&df$LUCAS_LC==1),"TimeScan.NDVIavg"])
+ndvi<-c("NDVI")
+test3<-as.data.frame((df[(df$SRTM<300&df$LUCAS_LC==1),"TimeScan.NDVIavg"]))
+colnames(test3)<-"NDVI"
+colnames(test3)
+names(test3)
+head(test3)
+test3
 
 #Create a new data frame with all entries but only for NDVI above 0.5
 #test2<-df[,c("TimeScan.NDVIavg")]
