@@ -48,7 +48,7 @@ colnames(test3)
 names(test3)
 head(test3)
 test3
-
+plot(test3)
 #Create a new data frame with all entries but only for NDVI above 0.5
 #test2<-df[,c("TimeScan.NDVIavg")]
 df_1<-df[df$TimeScan.NDVIavg>0.5,]
