@@ -38,4 +38,4 @@ plot(r3)
 
 r3[]<-rnorm(100) #fill raster with 100 random values
 r3
-plor(r3)
+plot(r3)
