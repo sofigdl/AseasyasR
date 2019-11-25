@@ -1,4 +1,4 @@
-#LOOPS, CONDITIONS AND FUNCTIONS
+#LOOPS (replilcating an instructions), CONDITIONS  AND FUNCTIONS
 
 ##If-else statements
 a<-5
@@ -6,6 +6,7 @@ if (a<0)
 {
  print("It is a positive number")
 }
+
 
 if (a!=5)
 {
@@ -27,6 +28,8 @@ system.time({
           ifelse(df$v1=="d","dog","elephant"))))
 })
 
+#using for
+
 for (i in 1:nrow(df)){
   val<-df$v1[i]
   df$v2[i]<-switch(val,
@@ -38,18 +41,26 @@ for (i in 1:nrow(df)){
 }
 head(df)
 
+for(j in 1:100){
+  print(j)
+}
+
 ## While statement
 J<-0
-while (J<1) {
+while (J < 1) {
     J<-J+0.1 ; print(J)
 }
 
+while(a>1){
+  print(a)
+  a<-a-0.1
+}
 ##Creating a function
 function_test<- function(x,y){
   z<-x+y
   return(z)
   }
-function_test(4,3)
+function_test((4+9*7),3)
 
 greet<-function(name){
   "How do you do,name?"
@@ -57,9 +68,12 @@ greet<-function(name){
 greet("Sofi")
 
 greet<-function(name){
-  paste0("How do you do,",name,"?")
+  paste0("How do you do, ",name,"?")
 }
 greet("Sofi")
 
 fun_ndvi<-function(nir,red){(nir-red)/(nir+red)}
-
+library(raster)
+library(sp)
+output<-calc(B3.TIF, B4.TIF, fun = fun_ndvi)
+getwd()
