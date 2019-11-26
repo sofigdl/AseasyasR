@@ -68,6 +68,7 @@ ggplot(df, aes(c))+
 ggplot(df, aes(a,b))+ geom_point(size=1) + geom_density2d()
 
 install.packages("hexbin")
+
 library(hexbin)
 #Scatterplot with hexbins
 ggplot(df, aes(a,b))+geom_hex( bins=30)
@@ -79,9 +80,22 @@ gg1 + theme_bw()
 gg1 + theme_linedraw()+geom_bin2d() 
 
 #define your theme
-ggplot(df, aes(a,b))+
+ggplot()+
   geom_point(data=df, aes(a,b,colour=c))+
   facet_grid(a~b)+
   ggtitle("my chart")+
   theme(plot.title = element_text(angle = 0, size = 22, colour = "hotpink"))+
   scale_colour_discrete(name="type")
+
+install.packages("hrbrthemes", repos = "https://cinc.rud.is")
+library(hrbrthemes)
+library(gcookbook)
+library(tidyverse)
+
+ggplot(df, aes(a,b)) +
+  geom_point(color = ft_cols$yellow) +
+  labs(x="Fuel efficiency (mpg)", y="Weight (tons)",
+       title="Seminal ggplot2 scatterplot example",
+       subtitle="A plot that is only useful for demonstration purposes",
+       caption="Brought to you by the letter 'g'") + 
+  theme_ft_rc()
