@@ -69,3 +69,45 @@ ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, color = continent)) +
 
 # Save at gif:
 anim_save("271-ggplot2-animated-gif-chart-with-gganimate1.gif")
+
+#-----------------------------------------------#
+#Otros paquetes para explorar
+install.packages("ggmap")
+library(ggpubr)
+library(ggridges)
+library(ggmap)
+library(ggcorrplot)
+
+us <- c(left = -125, bottom = 25.75, right = -67, top = 49)
+get_stamenmap(us, zoom = 5, maptype = "toner-lite") %>% ggmap() 
+
+library("dplyr")
+#  
+#  Attaching package: 'dplyr'
+#  The following objects are masked from 'package:stats':
+#  
+#      filter, lag
+#  The following objects are masked from 'package:base':
+#  
+#      intersect, setdiff, setequal, union
+library("forcats")
+
+# define helper
+`%notin%` <- function(lhs, rhs) !(lhs %in% rhs)
+
+# reduce crime to violent crimes in downtown houston
+violent_crimes <- crime %>% 
+  filter(
+    offense %notin% c("auto theft", "theft", "burglary"),
+    -95.39681 <= lon & lon <= -95.34188,
+    29.73631 <= lat & lat <=  29.78400
+  ) %>% 
+  mutate(
+    offense = fct_drop(offense),
+    offense = fct_relevel(offense, c("robbery", "aggravated assault", "rape", "murder"))
+  )
+
+# use qmplot to make a scatterplot on a map
+qmplot(lon, lat, data = violent_crimes, maptype = "toner-lite", color = I("red"))
+#  Using zoom = 14...
+#  Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.
