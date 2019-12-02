@@ -29,7 +29,7 @@ max(loc$time)
 install.packages("zoo")
 library(lubridate)
 library(zoo)
-
+library(raster)
 loc$date<- as.Date(loc$time, '%Y/%m/%d')
 loc$year<- year(loc$date)
 loc$month_year<-as.yearmon(loc$date)
@@ -167,48 +167,38 @@ ggmap(gtm) + geom_point(data = loc_2, aes(x = lon, y = lat, color = velocity), a
   scale_colour_gradient(low = "blue", high = "red", guide = guide_legend(title = "Velocity"))
 
 ##############################################################################
+#What distance did I travel?
+ 
+loc3<- with(loc, subset(loc, loc$time > as.POSIXct('2016-11-01 0:00:01'))) 
+loc3<- with(loc, subset(loc3, loc$time < as.POSIXct('2019-11-22 23:59:59')))
 
-loc3 <- with(loc, subset(loc, loc$time > as.POSIXct('2016-01-01 0:00:01')))
-loc3 <- with(loc, subset(loc3, loc$time < as.POSIXct('2016-12-22 23:59:59')))
+#Shifting vectors for latitude and longitude to include end position
 
-# Shifting vectors for latitude and longitude to include end position
 shift.vec <- function(vec, shift){
-  if (length(vec) <= abs(shift)){
-    rep(NA ,length(vec))
+  if (length(vec)<= abs(shift)){
+    rep(NA, lenght(vec))
   } else {
-    if (shift >= 0) {
-      c(rep(NA, shift), vec[1:(length(vec) - shift)]) }
-    else {
-      c(vec[(abs(shift) + 1):length(vec)], rep(NA, abs(shift)))
+    if (shift >= 0){
+      c(rep(NA, shift), vec[1:(lenght(vec)-shift)])
+    } else {
+      c(vec[(abs(shift)+1): length(vec)], rep(NA, abs(shift)))
     }
   }
 }
 
-loc3$lat.p1 <- shift.vec(loc3$lat, -1)
-loc3$lon.p1 <- shift.vec(loc3$lon, -1)
+loc3$lat.p1 <-shift.vec(loc3$lat, -1)
+loc3$lon.p1<- shift.vec(loc3$lon, -1)
 
-# Calculating distances between points (in metres) with the function pointDistance from the 'raster' package.
+#Calculating the distances between points
+
 library(raster)
-loc3$dist.to.prev <- apply(loc3, 1, FUN = function(row) {
+loc3$dist.to.prev <- apply(loc3, 1, FUN = function(row){
   pointDistance(c(as.numeric(as.character(row["lat.p1"])),
                   as.numeric(as.character(row["lon.p1"]))),
-                c(as.numeric(as.character(row["lat"])), as.numeric(as.character(row["lon"]))),
-                lonlat = T) # Parameter 'lonlat' has to be TRUE!
+                c(as.numeric(as.character(row["lat"])), 
+                  as.numeric(as.character(row["lon"]))),
+                lonlat = TRUE)
 })
+
 round(sum(as.numeric(as.character(loc3$dist.to.prev)), na.rm = TRUE)*0.001, digits = 2)
 
-
-distance_p_month <- aggregate(loc3$dist.to.prev, by = list(month_year = as.factor(loc3$month_year)), FUN = sum)
-distance_p_month$x <- distance_p_month$x*0.001
-
-library(ggplot2)
-ggplot(distance_p_month[-1, ], aes(x = month_year, y = x,  fill = month_year)) + 
-  geom_bar(stat = "identity")  + 
-  guides(fill = FALSE) +
-   labs(
-    x = "",
-    y = "Distance in km",
-    title = "Distance traveled per month in 2016",
-    caption = "This barplot shows the sum of distances between recorded 
-    positions for 2016."
-  )
