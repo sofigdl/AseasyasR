@@ -99,7 +99,7 @@ ggmap(eur) + geom_point(data = loc, aes(x = lon, y = lat), alpha = 0.5, color = 
     x = "Longitude", 
     y = "Latitude", 
     title = "Location history data points in Europe",
-    caption = "\nA simple point plot shows recorded positions.")
+    caption = "\nLocation points obtained from Google data.")
 
 #Plot in map Germany
 
