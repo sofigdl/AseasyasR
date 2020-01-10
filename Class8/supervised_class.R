@@ -13,14 +13,14 @@ list.files()
 plot(allband[[1]])
 plot(td,add=TRUE)
 
-sc<-superClass(allband,trainData=td,
-               responseCol = "id",
-               filename="Class_test2.tif"
+sc3<-superClass(allband,trainData=td,
+               responseCol = "tipo",
+               filename="Class_test3.tif"
                )
 plot(sc$map)
 ?plot
 
-class_ras<-raster("Class_test2.tif")
+class_ras<-raster("Class_test3.tif")
 
 sc2<-superClass(allband, trainData = td, responseCol = "id", trainPartition = 0.1)
 plot(sc1$map)

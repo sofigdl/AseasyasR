@@ -26,4 +26,5 @@ ggplot(data = plotTable, mapping = aes(x = Reference, y = Prediction, fill = goo
   geom_tile() +
   geom_text(aes(label = Freq), vjust = .5, fontface  = "bold", alpha = 1) +
   scale_fill_manual(values = c(good = "darkgreen", bad = "red")) +
-  theme_light()
+  theme_light()+
+  ggtitle("Confusion Matrix for Landcover classification")

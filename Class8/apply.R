@@ -16,3 +16,6 @@ apply(m, 2, function(x) mean(x[x>0]))
 
 sapply(1:3, function(x) x^2)
 lapply(1:3, function(x) x^2)
+
+confusion_matrix1
+sapply(confusion_matrix1,2,sum)
