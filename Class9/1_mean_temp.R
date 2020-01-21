@@ -1,7 +1,14 @@
 #Link of the desired data files (monthly mean temperature)
+setwd("C:/Users/chofi/Documents/2019/Maestria/Programming_Geostatistic/GIT/Class9/Test14")
 http <- "ftp://opendata.dwd.de/climate_environment/CDC/grids_germany/monthly/air_temperature_mean/08_Aug/"
 library(RCurl)
 result<-getURL(http, verbose=TRUE, ftp.use.epsv=TRUE, dirlistonly=TRUE)
+result
+fy=1881
+ly=2019
+
+
+install.packages("tidyverse")
 
 #Split string into pieces
 library(tidyverse)
@@ -51,11 +58,11 @@ for (i in 1:length(filenames)){
 }
 plot(my_raster)
 
-layer_names<- c(paste0("Year_", seq(1881,2018, by=1)))
+layer_names<- c(paste0("Year_", seq(fy,ly, by=1)))
 names(my_raster)<-layer_names
 
 rasterHist<-my_raster[[grep("1961", layer_names):grep("1990", layer_names)]]
-rasterComp<-my_raster$Year_2018
+rasterComp<-my_raster$Year_2019
 
 my_crs<-"+init=epsg:31467"
 
@@ -64,7 +71,7 @@ rasterComp$crs<-sp::CRS(my_crs)
 
 #######################################
 
-layer_names <- c(paste0("Year_", seq(1881, 2018, by=1)))
+layer_names <- c(paste0("Year_", seq(fy, ly, by=1)))
 names(my_raster) <- layer_names
 
 # Subset Raster-Stack into old dates and new date
@@ -130,7 +137,7 @@ p2 <- ggR(rasterComp, geom_raster = T)+
   xlab("")+
   ylab("")
 
-pdf("August_mean_vs_2018.pdf", width = 14, height = 8)
+pdf("August_mean_vs_2019.pdf", width = 14, height = 8)
 grid.arrange(p1, p2, ncol=2)
 dev.off()
 
